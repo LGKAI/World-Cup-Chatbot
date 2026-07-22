@@ -1,5 +1,7 @@
 # World Cup Chatbot - Cháy cùng World Cup 2026
 
+Đồ án nhỏ Xử lý ngôn ngữ tự nhiên - RAG
+
 - Xây dựng RAG Chatbot sử dụng thư viện LangChain và Ollama của Python
 
 - Hướng dẫn cài đặt:
