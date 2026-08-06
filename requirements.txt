@@ -1,3 +1,4 @@
+langchain
 langchain-text-splitters
 langchain-ollama
 langchain-community
@@ -5,3 +6,4 @@ langchain-core
 faiss-cpu
 unstructured
 pypdf
+rank_bm25
