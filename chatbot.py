@@ -1,5 +1,4 @@
 import os
-import pickle
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import DirectoryLoader, UnstructuredFileLoader
 from langchain_community.vectorstores import FAISS
@@ -14,15 +13,13 @@ from langchain_classic.retrievers.ensemble import EnsembleRetriever
 
 def get_vectorstore_and_splits(embeddings):
     index_path = "faiss_index"
-    splits_path = "splits.pkl"
-    if os.path.exists(index_path) and os.path.exists(splits_path):
-        print("Loading existing FAISS index and BM25 splits...")
-        with open(splits_path, "rb") as f:
-            splits = pickle.load(f)
+    if os.path.exists(index_path):
+        print("Loading existing FAISS index...")
         vectorstore = FAISS.load_local(index_path, embeddings, allow_dangerous_deserialization=True)
+        splits = list(vectorstore.docstore._dict.values())
         return vectorstore, splits
     
-    print("No existing index found. Loading documents and building FAISS & BM25 index...")
+    print("No existing index found. Loading documents and building FAISS index...")
     loader = DirectoryLoader(
         path="./papers",
         glob="**/*.pdf",
@@ -61,9 +58,6 @@ def get_vectorstore_and_splits(embeddings):
     )
     print("Saving FAISS index locally...")
     vectorstore.save_local(index_path)
-    
-    with open(splits_path, "wb") as f:
-        pickle.dump(splits, f)
         
     return vectorstore, splits
 
