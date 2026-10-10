@@ -19,35 +19,7 @@
 
 ## 🏗️ Kiến trúc & Cách thức hoạt động
 
-Hệ thống hoạt động theo kiến trúc RAG nâng cao kết hợp hai quy trình chính: **Lập chỉ mục (Indexing Pipeline)** và **Truy xuất - Phản hồi (Query & Retrieval Pipeline)**.
-
-```mermaid
-flowchart TD
-    subgraph Indexing ["1. Luồng Lập Chỉ Mục Dữ Liệu (Indexing Pipeline)"]
-        PDF["Tài liệu PDF (papers/)"] --> Loader["UnstructuredFileLoader"]
-        Loader --> Splitter["RecursiveCharacterTextSplitter\n(Chunk: 1200, Overlap: 200)"]
-        Splitter --> Embed["OllamaEmbeddings\n(nomic-embed-text)"]
-        Embed --> FAISS[("FAISS Vectorstore\n(Cosine Distance)")]
-        Splitter --> BM25_Store["Docstore (Text Chunks)"]
-    end
-
-    subgraph Query ["2. Luồng Hỏi Đáp & Truy Xuất (Query & Retrieval Pipeline)"]
-        UserQ["Người dùng đặt câu hỏi"] --> HistoryAware["History-Aware Retriever\n(LLM viết lại câu hỏi độc lập)"]
-        ChatHistory[("Lịch sử hội thoại")] --> HistoryAware
-        HistoryAware --> Ensemble["Ensemble Retriever (Hybrid Search)"]
-        
-        FAISS -.->|40% Weight (Dense)| Ensemble
-        BM25_Store -.->|BM25: 60% Weight (Sparse)| Ensemble
-        
-        Ensemble --> Context["Top Relevant Chunks (k=5)"]
-        Context --> StuffPrompt["Prompt Chain (Ràng buộc tiếng Việt, trung thực)"]
-        UserQ --> StuffPrompt
-        StuffPrompt --> LLM["LLM (qwen2.5:7b-instruct)"]
-        LLM --> FinalAnswer["Câu trả lời tiếng Việt chính xác"]
-    end
-```
-
-### Chi tiết các bước xử lý:
+Hệ thống hoạt động theo kiến trúc RAG nâng cao kết hợp 2 quy trình chính: **Lập chỉ mục (Indexing Pipeline)** và **Truy xuất - Phản hồi (Query & Retrieval Pipeline)**. Chi tiết:
 
 1. **Thu thập & Cắt đoạn tài liệu (Document Ingestion & Chunking):**
    - Đọc các file PDF trong thư mục `papers/` bằng `UnstructuredFileLoader` đa luồng.
