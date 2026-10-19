@@ -2,7 +2,7 @@
 
 Ứng dụng RAG Chatbot thông minh chuyên hỗ trợ giải đáp mọi thông tin, lịch sử, thể thức và số liệu thống kê về World Cup. Hệ thống được xây dựng hoàn toàn cục bộ (local) kết hợp thư viện **LangChain** và **Ollama**.
 
-> **📌 Phân loại RAG:** Thuộc kiến trúc **Advanced RAG (RAG Nâng cao)**, cụ thể là sự kết hợp giữa:
+> **📌 Phân loại RAG:** Thuộc kiến trúc **Advanced RAG (RAG Nâng cao)**, là sự kết hợp giữa:
 > - **Hybrid Search RAG (RAG Tìm kiếm kết hợp):** Khắc phục nhược điểm của Naive RAG bằng cách kết hợp truy xuất ngữ nghĩa dense vector (**FAISS**) và truy xuất từ khóa chính xác sparse (**BM25**).
 > - **Conversational / History-Aware RAG (RAG Đàm thoại theo ngữ cảnh):** Tự động phân tích lịch sử hội thoại để viết lại câu hỏi (Query Rewriting) trước khi truy xuất dữ liệu.
 
