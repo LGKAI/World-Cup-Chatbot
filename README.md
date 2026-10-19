@@ -1,4 +1,4 @@
-# World Cup Chatbot - Cháy cùng World Cup 2026
+# World Cup Chatbot
 
 Ứng dụng RAG Chatbot thông minh chuyên hỗ trợ giải đáp mọi thông tin, lịch sử, thể thức và số liệu thống kê về World Cup. Hệ thống được xây dựng hoàn toàn cục bộ (local) kết hợp thư viện **LangChain** và **Ollama**.
 
